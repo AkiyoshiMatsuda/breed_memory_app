@@ -1,24 +1,17 @@
 from flask import Flask, jsonify
 import mysql.connector
-# import os
-# from dotenv import load_dotenv
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
-# load_dotenv()
+load_dotenv()
 
 def get_db_connection():
     return mysql.connector.connect(
-        # host=os.getenv("MYSQL_HOST"),
-        # port = int(os.getenv("MYSQL_PORT", 3306)),
-        # user=os.getenv("MYSQL_USER"),
-        # password=os.getenv("MYSQL_PASS"),
-        # database=os.getenv("MYSQL_DB")
-        # host='127.0.0.1',
-        host='localhost',
-        # port=3306,
-        user='root',
-        password='Ak1y0sz8',
-        database='breeding'
+        host=os.getenv("DB_HOST", "localhost"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME"),
     )
 
 @app.route("/")
