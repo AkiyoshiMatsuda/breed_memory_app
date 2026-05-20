@@ -17,7 +17,7 @@ def get_db_connection():
         host='localhost',
         # port=3306,
         user='root',
-        password='Ak1yosz8',
+        password='Ak1y0sz8',
         database='breeding'
     )
 
