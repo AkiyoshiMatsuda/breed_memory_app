@@ -261,4 +261,28 @@ id BIGINT NOT NULL AUTO_INCREMENT
 );
 ```
 ### excretion_records
+```
+CREATE TABLE excretion_records(
+id BIGINT NOT NULL AUTO_INCREMENT
+,reptile_id BIGINT NOT NULL
+,number INT NOT NULL
+,recorded_at DATETIME NOT NULL
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+,FOREIGN KEY (reptile_id)
+    REFERENCES reptiles(id)
+    ON DELETE CASCADE
+);
+```
 ### diary_records
+```
+CREATE TABLE diary_records(
+id BIGINT NOT NULL
+,reptile_id BIGINT NOT NULL
+,diary TEXT NOT NULL
+,recorded_at DATETIME NOT NULL
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+,FOREIGN KEY (reptile_id)
+    REFERENCES reptiles(id)
+    ON DELETE CASCADE
+);
+```
