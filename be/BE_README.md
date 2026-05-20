@@ -287,3 +287,67 @@ id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT
     ON DELETE CASCADE
 );
 ```
+
+## テストコード
+### user追加
+```
+INSERT INTO users(
+    name
+    ,email
+    ,password_hash
+)
+VALUES(
+    'test_user'
+    ,'hogehoge@example.com'
+    ,'test_hash'
+);
+```
+### 生体追加
+```
+INSERT INTO reptiles(
+    user_id
+    ,name
+    ,species
+    ,morph
+    ,birthday
+    ,arrival_date
+    ,sex
+    ,note
+)
+VALUES(
+    2
+    ,'テスト'
+    ,'クレステッドゲッコー'
+    ,'バイカラーレッド'
+    ,'2026-05-20'
+    ,'2026-05-20'
+    ,'unknown'
+    ,'テスト用の架空の生体'
+);
+```
+### 温湿度追加
+```
+INSERT INTO environment_records (
+    reptile_id,
+    temperature,
+    humidity,
+    recorded_at
+)
+VALUES (
+    3,
+    26.5,
+    72.0,
+    '2026-05-20 18:35:00'
+);
+```
+### 生体名と温湿度を取得
+```
+SELECT
+    reptiles.name
+    ,environment_records.temperature
+    ,environment_records.humidity
+    ,environment_records.recorded_at
+FROM environment_records
+JOIN reptiles
+    ON environment_records.reptile_id = reptiles.id;
+```
