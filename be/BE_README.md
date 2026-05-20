@@ -108,7 +108,7 @@
 
 ## カラムの詳細設計
 ### users
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL|AUTO INCREMENT|
 |name|VARCHAR(255)|NOT NULL||
@@ -116,7 +116,7 @@
 |password_hash|VARCHAR(255)|NOT NULL||
 |created_at|TIMESTAMP|NOT NULL|作成時点で自動で追加するため<br>ユーザー入力は不要|
 ### reptiles
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL|AUTO INCREMENT|
 |user_id|BIGINT|NOT NULL||
@@ -129,61 +129,136 @@
 |note|TAXT|NULL||
 |created_at|TIMESTAMP|NOT NULL||
 ### photos
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL|AUTO INCREMENT|
 |reptiles_id|BIGINT|NOT NULL||
 |photo|VARCHAR(255)|NULL|画像データはディレクトリなどに格納しurlをDBに保存|
-|recorded_at|DATATIME|NOT NULL||
+|recorded_at|DATETIME|NOT NULL||
 |created_at|TIMESTAMP|NOT NULL||
 ### weight_records
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL||
 |reptile_id|BIGINT|NOT NULL||
 |weight_g|FLOAT|NOT NULL||
-|recorded_at|DATATIME|NOT NULL||
+|recorded_at|DATETIME|NOT NULL||
 |created_at|TIMESTAMP|NOT NULL||
 ### feeding_records
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL||
 |reptile_id|BIGINT|NOT NULL||
 |food_name|VARCHAR(255)|NOT NULL||
 |amount_g|FLOAT|NULL||
-|recorded_at|DATATIME|NOT NULL||
+|recorded_at|DATETIME|NOT NULL||
 |created_at|TIMESTAMP|NOT NULL||
 ### environment_records
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL||
 |reptile_id|BIGINT|NOT NULL||
 |temperature|FLOAT|NOT NULL||
 |humidity|FLOAT|NOT NULL||
-|recorded_at|DATATIME|NOT NULL||
+|recorded_at|DATETIME|NOT NULL||
 |created_at|TIMESTAMP|NOT NULL||
 ### excretion_records
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL||
 |reptile_id|BIGINT|NOT NULL||
 |number|INT|NOT NULL||
-|recorded_at|DATATIME|NOT NULL||
+|recorded_at|DATETIME|NOT NULL||
 |created_at|TIMESTAMP|NOT NULL||
 ### diary_records
-|カラム名|型|NuLL可否|メモ|
+|カラム名|型|NULL可否|メモ|
 |---|---|---|---|
 |id|BIGINT|NOT NULL||
 |reptile_id|BIGINT|NOT NULL||
 |diary|TEXT|NOT NULL||
-|recorded_at|DATATIME|NOT NULL||
+|recorded_at|DATETIME|NOT NULL||
 |created_at|TIMESTAMP|NOT NULL||
 ## SQL文
 ### users
+```
+CREATE TABLE users(
+id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT 
+,name VARCHAR(255) NOT NULL
+,email VARCHAR(255) NOT NULL UNIQUE
+,password_hash VARCHAR(255) NOT NULL
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
 ### reptiles
+```
+CREATE TABLE reptiles(
+id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT
+,user_id BIGINT NOT NULL
+,species VARCHAR(255) 
+,morph VARCHAR(255)
+,birthday DATE
+,arrival_date DATE NOT NULL
+,sex VARCHAR(255)
+,note TEXT
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+,FORRIGN KEY (user_id) 
+    REFERENCES users(id) 
+    ON DELETE CASCADE
+);
+```
 ### photos
+```
+CREATE TABLE photos(
+id BIGINT NOT NULL AUTO_INCREMENT
+,reptile_id BIGINT NOT NULL
+,photo VARCHAR(255) 
+,recorded_at DATETIME NOT NULL
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+,FOREIGN KEY(reptile_id) 
+    REFERENCES reptiles(id)
+    ON DELETE CASCADE
+);
+```
 ### weight_records
+```
+CREATE TABLE weight_records(
+id BIGINT NOT NULL AUTO_INCREMENT
+,reptile_id BIGINT NOT NULL
+,weight_g FLOAT NOT NULL
+,recorded_at DATETIME NOT NULL
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+,FOREIGN KEY (reptile_id)
+    REFERENCES reptiles(id)
+    ON DELETE CASCADE
+);
+```
 ### feeding_records
+```
+CREATE TABLE feeding_records(
+id BIGINT NOT NULL AUTO_INCREMENT
+,reptile_id BIGINT NOT NULL
+,food_name VARCHAR(255) NOT NULL
+,amout_g FLOAT 
+,recorded_at DATETIME NOT NULL
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+,FOREIGN KEY (reptile_id)
+    REFERENCES reptiles(id)
+    ON DELETE CASCADE
+);
+```
 ### environment_records
+```
+CREATE TABLE environment_records(
+id BIGINT NOT NULL AUTO_INCREMENT
+,reptile_id BIGINT NOT NULL
+,temperature FLOAT NOT NULL
+,humidity FLOAT NOT NULL
+,recorded_at DATETIME NOT NULL
+,created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+,FOREIGN KEY (reptile_id)
+    REFERENCES reptiles(id)
+    ON DELETE CASCADE
+);
+```
 ### excretion_records
 ### diary_records
