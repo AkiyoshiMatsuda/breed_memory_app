@@ -114,7 +114,7 @@
 |name|VARCHAR(255)|NOT NULL||
 |email|VARCHAR(255)|NOT NULL||
 |password_hash|VARCHAR(255)|NOT NULL||
-|created_at|TIMESTAMP|NOT NULL|作成時点で自動で追加するため<br>ユーザー入力は不要|
+|created_at|TIMESTAMP|NOT NULL||
 ### reptiles
 |カラム名|型|NULL可否|メモ|
 |---|---|---|---|

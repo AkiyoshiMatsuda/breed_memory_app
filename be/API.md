@@ -2,9 +2,42 @@
 **命名規則**
 
 ## user作成
-POST /users/create
+### エンドポイント
+POST /users
+### 説明
+ユーザーの作成
+### リクエスト
+- header
+```
+Content-Type: application/json
+```
+- body
+```
+{
+    "name":"admin",
+    "email":"hogehoge@example.com",
+    "password_hash":"ad_pass"
+}
+```
+### レスポンス
+- 201 created
+```
+{
+    "status":"success",
+    "id":1,
+    "message":"user created"
+}
+```
+- 400 bad request
+```
+{
+    "status":"error",
+    "message":"user create failed."
+}
+```
 ## userログイン
-POST /users/login
+### POST /users/login
+
 ## reptiles登録
 POST /reptiles/
 ## 体重記録
