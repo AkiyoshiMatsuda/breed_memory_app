@@ -68,7 +68,40 @@ Content-Type: application/json
 }
 ```
 ## reptiles登録
+### エンドポイント
 POST /reptiles/
+### 説明
+生体を登録
+### リクエスト
+- header
+```
+Content-Type: application/json
+```
+- body
+```
+{
+    "user_id":1,
+    "name":"テスト",
+    "species":"クレステッドゲッコー",
+    "morph":"ダルメシアン",
+    "birthday":"1111-11-11"
+}
+```
+### レスポンス
+- 201 created
+```
+{
+    "status":"success",
+    "message":"Registration correct",
+    "info":Json.stringify{
+        "id":1,
+        "name":"テスト",
+        "species":"クレステッドゲッコー",
+        "morph":"ダルメシアン",
+        "birthday":"1111-11-11"
+    }
+}
+```
 ## 体重記録
 ## 体重取得
 ## 温湿度記録
