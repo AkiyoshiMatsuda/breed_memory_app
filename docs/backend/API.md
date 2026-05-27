@@ -16,7 +16,7 @@ Content-Type: application/json
 {
     "name":"admin",
     "email":"hogehoge@example.com",
-    "password_hash":"ad_pass"
+    "password":"ad_pass"
 }
 ```
 ### レスポンス
@@ -36,8 +36,37 @@ Content-Type: application/json
 }
 ```
 ## userログイン
-### POST /users/login
-
+### エンドポイント
+POST /users/login
+### 説明
+ユーザーのログイン
+### リクエスト
+- header
+```
+Content-Type: application/json
+```
+- body
+```
+{
+    "email":"hogehoge@example.com",
+    "password":"ad_pass"
+}
+```
+### レスポンス
+- 200 ok
+```
+{
+    "status":"success",
+    "message":"Login correct."
+}
+```
+- 400 bad request
+```
+{
+    "status":"error",
+    "message":"Login incorrect."
+}
+```
 ## reptiles登録
 POST /reptiles/
 ## 体重記録
