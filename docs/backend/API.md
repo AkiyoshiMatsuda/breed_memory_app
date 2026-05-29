@@ -102,7 +102,41 @@ Content-Type: application/json
     }
 }
 ```
-
+## reptiles取得
+### エンドポイント
+GET /reptiles/
+### 説明
+生体情報を取得
+### リクエスト
+- header
+```
+Content-Type: application/json
+```
+- body
+```
+{
+    "user_id":1
+}
+```
+### レスポンス
+- 200 ok
+```
+{
+    "status":"success",
+    "message":"Acquisition correct",
+    "info":{
+        "id":1,
+        "name":"テスト",
+        "species":"クレステッドゲッコー",
+        "morph":"ダルメシアン",
+        "birthday":"1111-11-11",
+        "arrival_date":"1111-11-11",
+        "sex":"male",
+        "note":"テスト個体",
+        "created_at":"1111-11-11"
+    }
+}
+```
 ## 体重記録
 ## 体重取得
 ## 温湿度記録
