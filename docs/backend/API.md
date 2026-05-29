@@ -104,7 +104,7 @@ Content-Type: application/json
 ```
 ## reptiles取得
 ### エンドポイント
-GET /reptiles/
+GET /users/{user_id}/reptiles
 ### 説明
 生体情報を取得
 ### リクエスト
@@ -113,18 +113,14 @@ GET /reptiles/
 Content-Type: application/json
 ```
 - body
-```
-{
-    "user_id":1
-}
-```
+なし
 ### レスポンス
 - 200 ok
 ```
 {
     "status":"success",
     "message":"Acquisition correct",
-    "info":{
+    "reptiles":{
         "id":1,
         "name":"テスト",
         "species":"クレステッドゲッコー",
