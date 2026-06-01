@@ -1,7 +1,8 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import mysql.connector
 import os
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 load_dotenv()
@@ -17,7 +18,38 @@ def get_db_connection():
 @app.route("/")
 def index():
     return "Flask is running"
+@app.route("/users", methods=["POST"])
+def create_user():
+    data = request.get_json()
 
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+
+    password_hash = generate_password_hash(password)
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO users(
+        name, email, password_hash) 
+    VALUES (%s, %s, %s)"""
+    , (name, email, password_hash))
+
+    conn.commit()
+
+    user_id = cursor.lastrowid
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "status": "success",
+        "id": user_id,
+        "message": "user created"
+    }), 201
+    
 @app.route("/reptiles", methods=["GET"])
 def get_reptiles():
     conn = get_db_connection()
