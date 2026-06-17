@@ -41,8 +41,6 @@ function Login() {
       </p>
     </div>
   );
-  console.log("Email:", email);
-  console.log("Password:", password);
 }
 
 export default Login;
