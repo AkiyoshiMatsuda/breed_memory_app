@@ -18,6 +18,8 @@ def get_db_connection():
 @app.route("/")
 def index():
     return "Flask is running"
+
+# ユーザー登録用のエンドポイント
 @app.route("/users", methods=["POST"])
 def create_user():
     data = request.get_json()
@@ -49,7 +51,35 @@ def create_user():
         "id": user_id,
         "message": "user created"
     }), 201
-    
+
+@app.route('/login', methods=["POST"])
+def login():
+    data = request.get_json()
+
+    email = data.get("email")
+    password = data.get("password")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+    user = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if user and check_password_hash(user["password_hash"], password):
+        return jsonify({
+            "status": "success",
+            "id": user["id"],
+            "message": "login successful"
+        }), 200
+    else:
+        return jsonify({
+            "status": "error",
+            "message": "invalid credentials"
+        }), 401
+
 @app.route("/reptiles", methods=["GET"])
 def get_reptiles():
     conn = get_db_connection()
